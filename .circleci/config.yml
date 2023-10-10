@@ -4,7 +4,7 @@ jobs:
     docker:
       - image: circleci/node:14  # You can change the Node.js version as needed
 
-    working_directory: ~/repo
+    working_directory: .
 
     steps:
       - checkout  # Pull the code from your repository
