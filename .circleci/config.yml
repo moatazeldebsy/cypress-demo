@@ -33,10 +33,13 @@ jobs:
       - image: circleci/node:14
 
     steps:
+      - checkout
+
       - run:
           name: SonarCloud Scan
           command: |
-            npx sonarqube-scanner \
+            npm install -g sonarqube-scanner
+            sonar-scanner \
               -Dsonar.organization=${SONARCLOUD_ORG_KEY} \
               -Dsonar.projectKey=${SONARCLOUD_PROJECT_KEY} \
               -Dsonar.sources=. \
@@ -48,4 +51,4 @@ workflows:
   build-deploy:
     jobs:
       - build
-      - sonarcloud-scan=
+      - sonarcloud-scan
