@@ -1,16 +1,33 @@
+version: 2.1
 jobs:
   build:
     docker:
-      - image: node:latest
+      - image: circleci/node:14  # You can change the Node.js version as needed
+
+    working_directory: ~/repo
+
     steps:
-      - checkout
-      - sonarcloud/scan
-orbs:
-  sonarcloud: sonarsource/sonarcloud@1.1.0
-version: 2.1
+      - checkout  # Pull the code from your repository
+
+      # Install project dependencies
+      - run:
+          name: Install Dependencies
+          command: npm install
+
+      # Add any additional setup steps here
+      # For example, running database migrations, etc.
+
+      # Run your tests
+      - run:
+          name: Run Tests
+          command: npm test
+
+      # Add any additional steps for building or deploying your app here
+      # For example, building frontend assets, deploying to a server, etc.
+
+# Customize workflows as needed for your CI/CD pipeline
 workflows:
-  main:
+  version: 2
+  build-deploy:
     jobs:
-      - build:
-          context: sonarcloud
-        
+      - build
