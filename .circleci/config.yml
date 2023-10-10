@@ -18,7 +18,7 @@ jobs:
       - run:
           name: SonarCloud Scan
           command: |
-            npm install -g sonarqube-scanner
+            sudo npm install -g sonarqube-scanner
             sonar-scanner \
               -Dsonar.organization=${SONARCLOUD_ORG_KEY} \
               -Dsonar.projectKey=${SONARCLOUD_PROJECT_KEY} \
