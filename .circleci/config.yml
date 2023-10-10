@@ -1,8 +1,5 @@
 version: 2.1
 
-orbs:
-  sonarcloud: sonarsource/sonarcloud@1.1.0
-
 jobs:
   build:
     docker:
@@ -28,27 +25,12 @@ jobs:
           name: Run Tests
           command: npm test
 
-  sonarcloud-scan:
-    docker:
-      - image: circleci/node:14
-
-    steps:
-      - checkout
-
-      - run:
-          name: SonarCloud Scan
-          command: |
-            sudo npm install -g sonarqube-scanner
-            sonar-scanner \
-              -Dsonar.organization=${SONARCLOUD_ORG_KEY} \
-              -Dsonar.projectKey=${SONARCLOUD_PROJECT_KEY} \
-              -Dsonar.sources=. \
-              -Dsonar.host.url=https://sonarcloud.io \
-              -Dsonar.login=${SONARCLOUD_TOKEN}
+ - sonarcloud/scan
+orbs:
+  sonarcloud: sonarsource/sonarcloud@1.0.3
 
 workflows:
-  version: 2
-  build-deploy:
+  main:
     jobs:
-      - build
-      - sonarcloud-scan
+      - build:
+          context: SonarCloud
