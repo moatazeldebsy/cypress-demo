@@ -1,28 +1,38 @@
 version: 2.1
+
 orbs:
   sonarcloud: sonarcloud/scan
+
 jobs:
   build:
     docker:
       - image: circleci/node:14
+
     steps:
       - checkout
+
       - restore_cache:
           keys:
             - v1-deps-{{ checksum "package-lock.json" }}
+
       - run:
           name: Install Dependencies
           command: npm install
+
       - save_cache:
           paths:
             - node_modules
           key: v1-deps-{{ checksum "package-lock.json" }}
+
       - run:
           name: Run Tests
           command: npm test
+
       - run:
           name: SonarCloud Analysis
-          command: sonar-scanner
+          command: |
+            sonar-scanner -Dsonar.login=${SONAR_TOKEN}
+
 workflows:
   version: 2
   build-deploy:
