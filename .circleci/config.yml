@@ -5,7 +5,6 @@ orbs:
 
 workflows:
   version: 2.1
-  development-ci-cd:
     jobs:
       - sonarcloud-scan:
           context: SonarCloud
