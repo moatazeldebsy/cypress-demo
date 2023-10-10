@@ -3,6 +3,14 @@ version: 2.1
 orbs:
   sonarcloud: sonarsource/sonarcloud@1.0.3
 
+jobs:
+  sonarcloud-scan:
+    docker:
+      - image: 'circleci/python:3.7.4'
+    steps:
+      - checkout
+      - sonarcloud/scan
+
 workflows:
   version: 2.1
   development-ci-cd:
